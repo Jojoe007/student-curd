@@ -86,7 +86,7 @@
   <script>
     $(document).ready(function () {
       $('#submit').click(function () {
-        const id = window.location.pathname.substring(7);
+        const id = window.location.pathname.substring(6);
 
         $.ajax({
           method: 'PUT',
@@ -98,6 +98,7 @@
             last_name: $('#last_name').val(),
             major: $('#major').val(),
             year: $('#year').val(),
+            old_id: id
           },
           success: (data, status) => {
             window.location.replace('/');

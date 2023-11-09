@@ -91,12 +91,12 @@ router.get('/edit/:id', function (req, res, next) {
 
 /* PUT edit student */
 router.put('/edit/:id', function (req, res, next) {
-  const { id, first_name, last_name, major, year } = req.body;
-  console.log(req.body);
+  const { id, first_name, last_name, major, year, old_id } = req.body;
+
   try {
     connection.query(
       'UPDATE student SET std_id = ?, std_fname = ?, std_lname = ?, std_major = ?, std_year = ? WHERE std_id = ?',
-      [id, first_name, last_name, major, year, id],
+      [id, first_name, last_name, major, year, old_id],
       function (err, results, fields) {
         if (err) {
           res.status(400).send(err.message);
