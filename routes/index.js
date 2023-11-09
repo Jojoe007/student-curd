@@ -46,7 +46,11 @@ router.post('/create', function (req, res, next) {
         if (err) {
           res.status(400).send(err);
         } else {
-          res.status(200).send(results);
+          if (results.affectedRows > 0) {
+            res.status(200).send(results);
+          } else {
+            res.status(404).send("Cannot create new student");
+          }
         }
       }
     );
