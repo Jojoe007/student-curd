@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Student Management</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <div class="relative overflow-x-auto sm:rounded-lg">
+    <div class="flex flex-row justify-between items-center p-5">
+      <div class="text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+        Students List
+      </div>
+
+      <div
+        class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <a href="/create">Create</a>
+      </div>
+    </div>
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="w-40 px-6 py-3">
+            Student ID
+          </th>
+          <th scope="col" class="px-6 py-3">
+            First Name
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Last Name
+          </th>
+          <th scope="col" class="w-32 px-6 py-3">
+            Major
+          </th>
+          <th scope="col" class="w-32 px-6 py-3">
+            Year
+          </th>
+          <th scope="col" class="px-6 py-3 text-right w-40">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (students.length==0) { %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <th scope="row" class="px-6 py-4 font-bold text-red-500 whitespace-nowrap dark:text-white">
+              No Record
+            </th>
+          </tr>
+          <% } else { %>
+            <% for(var i=0; i < students.length; i++) { %>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <%= students[i].std_id %>
+                </th>
+                <td class="px-6 py-4">
+                  <%= students[i].std_fname %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= students[i].std_lname %>
+                </td>
+                <td class="px-6 py-4 uppercase">
+                  <%= students[i].std_major %>
+                </td>
+                <td class="px-6 py-4">
+                  <%= students[i].std_year %>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <a href="/edit/<%= students[i].std_id %>"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline pr-4">Edit</a>
+                  <delete id="<%= students[i].std_id %>"
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</delete>
+                </td>
+              </tr>
+              <% } %>
+                <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $('delete').click(function () {
+      const id = $(this).attr('id');
+
+      $.ajax({
+        method: 'DELETE',
+        url: `/delete/${id}`,
+        success: (data, status) => {
+          window.location.replace('/');
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
